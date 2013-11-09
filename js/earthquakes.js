@@ -40,6 +40,7 @@ $(function(){
 //queries the server for the list of recent quakes
 //and plots them on a Google map
 function getQuakes() {
+	$('.message').html('Loading... <img src="img/loading.gif">');
 	var url = gov.usgs.quakesUrl;
 	$.getJSON(url, function(quakes){
 		//quakes is an array of objects, each of which represents info about a quake
