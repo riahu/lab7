@@ -79,16 +79,25 @@ function addQuakeMarkers(quakes, map) {
 				position: new google.maps.LatLng(quake.location.latitude, quake.location.longitude)
 			});
 		}
+		infoWindow = new google.maps.InfoWindow({
+		    content: new Date(quake.datetime).toLocaleString() + 
+		                ': magnitude ' + quake.magnitude + ' at depth of ' + 
+		                quake.depth + ' meters'
+		});
+		registerInfoWindow(map, quake.mapMarker, infoWindow);
 		google.maps.event.addListener(quake.mapMarker, 'click', function(){
 			//create an info window with the quake info
-			gov.usgs.iw = new google.maps.InfoWindow({
-			    content: new Date(quake.datetime).toLocaleString() + 
-			        ': magnitude ' + quake.magnitude + ' at depth of ' + 
-			        quake.depth + ' meters'
-			});
 
 			//open the info window
 			gov.usgs.iw.open(map, this);
 		}); //click handler for marker
 	}
 } //addQuakeMarkers()
+
+function registerInfoWindow(map, marker, infoWindow) {
+    google.maps.event.addListener(marker, 'click', function(){
+
+        infoWindow.open(map, marker);
+
+    });                
+} //registerInfoWindow()
